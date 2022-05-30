@@ -30,7 +30,7 @@ A module can have up to 5 folders:
 
 ## Troubles in the development
 
-Altough the user interface wasn't the main focus of this challenge, I wanted to create a custom UI with animations without using many packages. This in addition to the short available time that I had caused some issues. 
+Altough the user interface wasn't the main focus of this challenge, I wanted to create a custom UI with animations without using many packages. Besides that, I've decided to use streams instead of Future to have realtime updates in the app but this made harder to do some animations and updates in the app. These things in addition to the short available time that I had caused some issues. 
 
 The main issue was not developing the search feature, altough it was simple. Besides that, some cubits and services were not tested with unit testing.
 
@@ -47,4 +47,10 @@ For a limited time project some production standarts were skipped, resulting in 
 * Firebase rules could be enabled.
 * Loggers and analytics could be implemented.
 * It could use the 'melos' package to manage the monorepo.
+
+## Videos
+
+![LightMode][lightmode.gif]
+![DarkMode][darkmode.gif]
+
 
