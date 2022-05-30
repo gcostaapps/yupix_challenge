@@ -47,3 +47,4 @@ For a limited time project some production standarts were skipped, resulting in 
 * Firebase rules could be enabled.
 * Loggers and analytics could be implemented.
 * It could use the 'melos' package to manage the monorepo.
+
