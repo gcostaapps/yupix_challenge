@@ -1,0 +1,29 @@
+name: dependencies_core
+description: A new Flutter package project.
+version: 0.0.1
+
+environment:
+  sdk: ">=2.17.0 <3.0.0"
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  #State Management
+  bloc: ^8.0.3
+  flutter_bloc: ^8.0.1
+  freezed_annotation: ^2.0.3
+  bloc_test: ^9.0.3
+  #Utils
+  dartz: ^0.10.1
+  #Testing
+  mocktail: ^0.3.0
+  #Know platform without dart.io (web error)
+  universal_platform: ^1.0.0+1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.1
+
+flutter:

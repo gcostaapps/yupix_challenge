@@ -1,0 +1,55 @@
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    prefer_relative_imports: true 
+    avoid_slow_async_io: true
+    cancel_subscriptions: true
+    close_sinks: true
+    unnecessary_statements: true
+    always_declare_return_types: true
+    avoid_void_async: true
+    prefer_final_in_for_each: true
+    prefer_final_locals: true
+    prefer_interpolation_to_compose_strings: true
+    use_decorated_box: true
+
+
+
+analyzer:
+  plugins:
+    - dart_code_metrics
+
+dart_code_metrics:
+  metrics:
+    cyclomatic-complexity: 20
+    number-of-arguments: 4
+    maximum-nesting-level: 5
+    lines-of-code: 100
+    number-of-methods: 10
+  metrics-exclude:
+    - test/**
+    - lib/*.freezed.dart
+  rules:
+    - avoid-unnecessary-type-casts
+    - avoid-unused-parameters
+    - avoid-unnecessary-type-assertions
+    - avoid-nested-conditional-expressions:
+        acceptable-level: 3
+    - double-literal-format
+    - no-boolean-literal-compare
+    - no-empty-block
+    - no-equal-then-else
+    - no-object-declaration
+    - prefer-conditional-expressions
+    - prefer-extracting-callbacks
+    - prefer-first
+    - prefer-last
+    - avoid-returning-widgets
+    - avoid-unnecessary-setstate
+    - prefer-const-border-radius
+    - prefer-single-widget-per-file:
+        ignore-private-widgets: true
+  anti-patterns:
+    - long-method
+    - long-parameter-list

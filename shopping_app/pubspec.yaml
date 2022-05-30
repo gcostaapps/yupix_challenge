@@ -1,0 +1,53 @@
+name: shopping_app
+description: A new Flutter project.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.17.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.17.0
+  design_system:
+    path: ../design_system
+  dependencies_core:
+    path: ../dependencies_core
+  shopping_app_core:
+    path: ../shopping_app_core
+  shopping_app_favorites:
+    path: ../shopping_app_favorites
+  shopping_app_form:
+    path: ../shopping_app_form
+  shopping_app_items:
+    path: ../shopping_app_items
+  freezed: ^2.0.3+1
+  file_picker: ^4.6.0
+  #Routing
+  beamer: ^1.4.1+1
+  #Firestore
+  firebase_core: ^1.17.1
+  cloud_firestore: ^3.1.17
+  firebase_storage: ^10.2.17 
+
+  
+  
+
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.1
+  dart_code_metrics: ^4.15.2
+  build_runner: ^2.1.11
+
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - empty_list.png

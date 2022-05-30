@@ -1,0 +1,30 @@
+{
+	"folders": [
+		{
+			"name": "design_system",
+			"path": "design_system"
+		},
+		{
+			"name": "dependencies_core",
+			"path": "dependencies_core"
+		},
+		{
+			"name": "shopping_app_core",
+			"path": "shopping_app_core"
+		},
+		{
+			"name": "shopping_app",
+			"path": "shopping_app"
+		},
+		{
+			"path": "shopping_app_favorites"
+		},
+		{
+			"path": "shopping_app_form"
+		},
+		{
+			"path": "shopping_app_items"
+		}
+	],
+	"settings": {}
+}

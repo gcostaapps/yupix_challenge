@@ -1,0 +1,32 @@
+name: shopping_app_form
+description: A new Flutter package project.
+version: 0.0.1
+publish_to: 'none'
+
+environment:
+  sdk: ">=2.17.0 <3.0.0"
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.17.0
+  design_system:
+    path: ../design_system
+  dependencies_core:
+    path: ../dependencies_core
+  shopping_app_core:
+    path: ../shopping_app_core
+  freezed: ^2.0.3+1
+  file_picker: ^4.6.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+  dart_code_metrics: ^4.15.2
+  build_runner: ^2.1.11
+
+flutter:
