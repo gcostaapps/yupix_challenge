@@ -50,7 +50,7 @@ For a limited time project some production standarts were skipped, resulting in 
 
 ## Videos
 
-![LightMode][lightmode.gif]
-![DarkMode][darkmode.gif]
+<img src="lightmode.gif" width="288" height="640"/>
+<img src="darkmode.gif" width="288" height="640"/>
 
 
