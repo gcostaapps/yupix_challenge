@@ -56,7 +56,7 @@ class DismissibleShoppingItem extends StatelessWidget {
   Future<bool> confirmDeletion(BuildContext context) async {
     final delete = await AppDialogs.showWarningDialog<bool>(
       context,
-      title: 'Delete category?',
+      title: 'Delete item?',
       message:
           'You will also delete all items associated with this category. This action is irreversible. Are you sure?',
       onConfirm: (c) => Navigator.pop(c, true),
