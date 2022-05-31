@@ -52,14 +52,10 @@ PS: Lowered quality and FPS becaus of gif format.
 
 <table>
   <tr>
-    <td>All features</td>
-    <td>Light Mode</td>
-    <td>Dark Mode</td>
+    <td>All features - Light and Dark Mode</td>
   </tr>
   <tr>
-    <td><img src="full.gif" width="288" height="640"/></td>
-    <td><img src="lightmode.gif" width="288" height="640"/></td>
-    <td><img src="darkmode.gif" width="288" height="640"/></td>
+    <td><img src="full.gif" width="320" height="640"/></td>
   </tr>
  </table>
 
