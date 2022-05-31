@@ -11,15 +11,15 @@ class ShoppingItemDatasource implements IShoppingItemDatasource {
   final shoppingItemsCollection = 'shoppingItems';
 
   @override
-  Stream<List<ShoppingItem>> getAllShopingItems() {
-    final result = firestore.collection(shoppingItemsCollection).snapshots();
+  Future<List<ShoppingItem>> getAllShopingItems() async {
+    final result = await firestore.collection(shoppingItemsCollection).get();
 
-    return result.map((event) => event.docs
+    return result.docs
         .map((e) => ShoppingItemDto.fromMap({
               'id': e.id,
               ...e.data(),
             }).toDomain())
-        .toList());
+        .toList();
   }
 
   @override

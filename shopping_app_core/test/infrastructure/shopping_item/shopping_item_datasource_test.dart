@@ -24,16 +24,11 @@ void main() {
   group('ShoppingItem datasource', () {
     test('should get all items', () async {
       final savedItem = await shoppingItemDatasource.addShoppingItem(item);
-      final itemsStream = shoppingItemDatasource.getAllShopingItems();
+      final items = await shoppingItemDatasource.getAllShopingItems();
 
-      expect((await itemsStream.first).length, 1);
-      expect(itemsStream, emits(isA<List<ShoppingItem>>()));
-      expect(
-        itemsStream,
-        emitsInOrder([
-          [savedItem]
-        ]),
-      );
+      expect(items.length, 1);
+      expect(items, isA<List<ShoppingItem>>());
+      expect(items.first, equals(savedItem));
     });
 
     test('should add the item and return the value saved with it\'s id',
@@ -45,31 +40,35 @@ void main() {
 
     test('should update an item', () async {
       final newItem = await shoppingItemDatasource.addShoppingItem(item);
+      final items = await shoppingItemDatasource.getAllShopingItems();
+      expect(items.first, newItem);
 
       final date = DateTime(2022, 05, 29);
       final modifiedItem =
           newItem.copyWith(isFavorite: true, favoritedAt: date, position: 1);
       await shoppingItemDatasource.updateShoppingItem(modifiedItem);
-      final itemsStream = shoppingItemDatasource.getAllShopingItems();
-      expect(itemsStream, emits([modifiedItem]));
+      final updatedItems = await shoppingItemDatasource.getAllShopingItems();
+      expect(updatedItems.first, modifiedItem);
     });
 
     test('should delete a saved item', () async {
       final newItem = await shoppingItemDatasource.addShoppingItem(item);
-      final itemsStream = shoppingItemDatasource.getAllShopingItems();
+      final items = await shoppingItemDatasource.getAllShopingItems();
+      expect(items.length, 1);
       await shoppingItemDatasource.deleteShoppingItem(newItem.id!);
-      expect(itemsStream, emits([]));
+      final newItems = await shoppingItemDatasource.getAllShopingItems();
+      expect(newItems.length, 0);
     });
 
     test('should delete a list of items from list of ids', () async {
       final newItem = await shoppingItemDatasource.addShoppingItem(item);
       final newItem2 = await shoppingItemDatasource.addShoppingItem(item);
-      final itemsStream = shoppingItemDatasource.getAllShopingItems();
 
       await shoppingItemDatasource.deleteShoppingItems(
         [newItem.id!, newItem2.id!],
       );
-      expect(itemsStream, emits([]));
+      final items = await shoppingItemDatasource.getAllShopingItems();
+      expect(items.length, 0);
     });
   });
 }

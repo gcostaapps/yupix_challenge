@@ -6,7 +6,7 @@ class DismissibleItem extends StatelessWidget {
     required this.rightToLeftWidget,
     this.leftToRightWidget,
     required this.confirmDismiss,
-    required this.onDismissed,
+    this.onDismissed,
     required this.child,
   }) : super(key: key);
 

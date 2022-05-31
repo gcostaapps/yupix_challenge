@@ -57,9 +57,10 @@ class ShoppingItemRepository implements IShoppingItemRepository {
   }
 
   @override
-  Either<GeneralFailure, Stream<List<ShoppingItem>>> getAllShopingItems() {
+  Future<Either<GeneralFailure, List<ShoppingItem>>>
+      getAllShopingItems() async {
     try {
-      final items = shoppingItemDatasource.getAllShopingItems();
+      final items = await shoppingItemDatasource.getAllShopingItems();
       return Right(items);
     } catch (e, stack) {
       return Left(GeneralFailure(ErrorData('getAllShopingItems', e, stack)));

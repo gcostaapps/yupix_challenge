@@ -1,6 +1,6 @@
 library dependencies_core;
 
-export 'src/device_info/device_info.dart';
+export 'src/utils/utils.dart';
 
 export 'package:bloc/bloc.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';

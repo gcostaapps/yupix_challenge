@@ -39,9 +39,6 @@ class ApplicationStartConfig {
         RepositoryProvider<IShoppingItemRepository>(
           create: (context) => ShoppingItemRepository(context.read()),
         ),
-        RepositoryProvider<IImagePickerService>(
-          create: (context) => ImagePickerService(),
-        ),
         RepositoryProvider<IStorageService>(
           create: (context) => DeviceOS.isDesktop
               ? DesktopStorageService()

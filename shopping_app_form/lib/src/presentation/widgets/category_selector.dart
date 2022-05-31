@@ -12,10 +12,13 @@ class CategorySelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ShoppingListFormCubit, ShoppingListFormState>(
-      buildWhen: (p, c) =>
-          p is ShoppingListFormItem &&
-          c is ShoppingListFormItem &&
-          p.category != c.category,
+      buildWhen: (p, c) {
+        final isCategoryForm =
+            p is ShoppingListFormItem && c is ShoppingListFormItem;
+        final categoryHasChanged =
+            isCategoryForm ? p.category != c.category : false;
+        return isCategoryForm && categoryHasChanged;
+      },
       builder: (context, state) {
         final itemState = state as ShoppingListFormItem;
 
@@ -27,18 +30,7 @@ class CategorySelector extends StatelessWidget {
                     .shade200;
 
         return ClickableCard(
-          onTap: () async {
-            final categorySelected =
-                await AppDialogs.showDialogBlurred<Category?>(
-              context,
-              const CategoriesDialog(),
-            );
-            if (categorySelected != null) {
-              context
-                  .read<ShoppingListFormCubit>()
-                  .changeItemCategory(categorySelected);
-            }
-          },
+          onTap: () async => changeItemCategory(context),
           shadowColor: categoryColor,
           borderRadius: const BorderRadius.all(Radius.circular(12)),
           child: Container(
@@ -60,5 +52,17 @@ class CategorySelector extends StatelessWidget {
         );
       },
     );
+  }
+
+  Future<void> changeItemCategory(BuildContext context) async {
+    final categorySelected = await AppDialogs.showDialogBlurred<Category?>(
+      context,
+      const CategoriesDialog(),
+    );
+    if (categorySelected != null) {
+      context
+          .read<ShoppingListFormCubit>()
+          .changeItemCategory(categorySelected);
+    }
   }
 }

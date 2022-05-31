@@ -10,21 +10,22 @@ class ImageSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ShoppingListFormCubit, ShoppingListFormState>(
-      listenWhen: (p, c) =>
-          p is ShoppingListFormItem &&
-          c is ShoppingListFormItem &&
-          c.filePickFailure.isSome() &&
-          c.filePickFailure != p.filePickFailure,
-      listener: (context, state) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Error picking image'),
-          duration: Duration(seconds: 2),
-        ));
+      listenWhen: (p, c) {
+        final isItemForm =
+            p is ShoppingListFormItem && c is ShoppingListFormItem;
+        final hasFilePickError = isItemForm
+            ? c.filePickFailure.isSome() &&
+                c.filePickFailure != p.filePickFailure
+            : false;
+        return isItemForm && hasFilePickError;
       },
-      buildWhen: (p, c) =>
-          p is ShoppingListFormItem &&
-          c is ShoppingListFormItem &&
-          p.file != c.file,
+      listener: (context, state) => showFilePickerErrorMessage(context),
+      buildWhen: (p, c) {
+        final isItemForm =
+            p is ShoppingListFormItem && c is ShoppingListFormItem;
+        final hasFileChanged = isItemForm ? p.file != c.file : false;
+        return isItemForm && hasFileChanged;
+      },
       builder: (context, state) {
         final itemState = state as ShoppingListFormItem;
         return InkWell(
@@ -67,4 +68,10 @@ class ImageSelector extends StatelessWidget {
       },
     );
   }
+
+  void showFilePickerErrorMessage(BuildContext context) =>
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Error picking image'),
+        duration: Duration(seconds: 2),
+      ));
 }

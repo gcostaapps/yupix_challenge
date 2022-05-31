@@ -21,7 +21,7 @@ class CategoryPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 24),
+      padding: const EdgeInsets.symmetric(vertical: 16),
       child: ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(12)),
         child: ExpandableHeader(

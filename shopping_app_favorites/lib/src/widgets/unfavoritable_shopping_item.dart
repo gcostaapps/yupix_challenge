@@ -7,7 +7,7 @@ import 'package:design_system/design_system.dart';
 
 import 'unfavoritable_container.dart';
 
-class UnfavoritableShoppingItem extends StatefulWidget {
+class UnfavoritableShoppingItem extends StatelessWidget {
   const UnfavoritableShoppingItem({
     Key? key,
     required this.shoppingItem,
@@ -16,40 +16,25 @@ class UnfavoritableShoppingItem extends StatefulWidget {
   final ShoppingItem shoppingItem;
 
   @override
-  State<UnfavoritableShoppingItem> createState() =>
-      _UnfavoritableShoppingItemState();
-}
-
-class _UnfavoritableShoppingItemState extends State<UnfavoritableShoppingItem> {
-  bool isFavorite = false;
-
-  @override
-  void initState() {
-    super.initState();
-    isFavorite = widget.shoppingItem.isFavorite;
-  }
-
-  @override
   Widget build(BuildContext context) {
     return DismissibleItem(
       key: UniqueKey(),
       confirmDismiss: (_) {
-        context.read<ShoppingListActorCubit>().updateShoppingItem(
-            widget.shoppingItem.copyWith(isFavorite: false));
+        context
+            .read<ShoppingListActorCubit>()
+            .favoriteShoppingItem(shoppingItem.copyWith(isFavorite: false));
         return Future.value(true);
       },
-      onDismissed: (_) {},
       rightToLeftWidget: const UnfavoritableContainer(),
       child: ShoppingItemWidget(
-        isFavorite: isFavorite,
-        onTapFavorite: (ctx) async {
-          ctx.read<ShoppingListActorCubit>().updateShoppingItem(
-              widget.shoppingItem.copyWith(isFavorite: false));
-        },
-        title: widget.shoppingItem.name,
-        url: widget.shoppingItem.imageUrl,
-        subtitle: widget.shoppingItem.favoritedAt != null
-            ? 'Added on ${DateFormat.MMMd().format(widget.shoppingItem.favoritedAt!)}'
+        isFavorite: shoppingItem.isFavorite,
+        onTapFavorite: (ctx) => ctx
+            .read<ShoppingListActorCubit>()
+            .favoriteShoppingItem(shoppingItem.copyWith(isFavorite: false)),
+        title: shoppingItem.name,
+        url: shoppingItem.imageUrl,
+        subtitle: shoppingItem.favoritedAt != null
+            ? 'Added on ${DateFormat.MMMd().format(shoppingItem.favoritedAt!)}'
             : null,
       ),
     );

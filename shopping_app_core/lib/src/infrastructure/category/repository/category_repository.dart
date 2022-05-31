@@ -33,9 +33,9 @@ class CategoryRepository implements ICategoryRepository {
   }
 
   @override
-  Either<GeneralFailure, Stream<List<Category>>> getAllCategories() {
+  Future<Either<GeneralFailure, List<Category>>> getAllCategories() async {
     try {
-      final categories = categoryDatasource.getAllCategories();
+      final categories = await categoryDatasource.getAllCategories();
       return Right(categories);
     } catch (e, stack) {
       return Left(GeneralFailure(ErrorData('getAllCategories', e, stack)));

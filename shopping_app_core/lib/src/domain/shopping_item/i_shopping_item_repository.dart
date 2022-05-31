@@ -4,7 +4,7 @@ import '../general_failure.dart';
 import 'shopping_item.dart';
 
 abstract class IShoppingItemRepository {
-  Either<GeneralFailure, Stream<List<ShoppingItem>>> getAllShopingItems();
+  Future<Either<GeneralFailure, List<ShoppingItem>>> getAllShopingItems();
   Future<Either<GeneralFailure, ShoppingItem>> addShoppingItem(
       ShoppingItem shoppingItem);
   Future<Either<GeneralFailure, Unit>> updateShoppingItem(

@@ -94,15 +94,15 @@ void main() {
           'should return Right(List<Category>) when categories is retrieved sucessfully',
           () async {
         when(() => mockCategoryDatasource.getAllCategories())
-            .thenAnswer((_) => Stream.value([categorySaved]));
+            .thenAnswer((_) => Future.value([categorySaved]));
 
-        final result = categoryRepository.getAllCategories();
+        final result = await categoryRepository.getAllCategories();
         final resultOption = result.fold((l) => l, (r) => r);
 
         verify(() => mockCategoryDatasource.getAllCategories()).called(1);
         verifyNoMoreInteractions(mockCategoryDatasource);
         expect(result.isRight(), true);
-        expect(resultOption, emits(equals([categorySaved])));
+        expect(resultOption, equals([categorySaved]));
       });
 
       test(
@@ -111,7 +111,7 @@ void main() {
         when(() => mockCategoryDatasource.getAllCategories())
             .thenThrow(exception);
 
-        final result = categoryRepository.getAllCategories();
+        final result = await categoryRepository.getAllCategories();
         final resultOption = result.fold((l) => l, (r) => r);
 
         verify(() => mockCategoryDatasource.getAllCategories()).called(1);

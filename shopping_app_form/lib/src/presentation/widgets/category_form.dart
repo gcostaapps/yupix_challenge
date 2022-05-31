@@ -2,6 +2,7 @@ import 'package:dependencies_core/dependencies_core.dart';
 import 'package:flutter/material.dart';
 
 import 'package:design_system/design_system.dart';
+import 'package:shopping_app_core/shopping_app_core.dart';
 
 import '../../application/shopping_list_form/shopping_list_form_cubit.dart';
 import 'color_selector.dart';
@@ -14,25 +15,16 @@ class CategoryForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<ShoppingListFormCubit, ShoppingListFormState>(
-      listenWhen: (p, c) =>
-          p is ShoppingListFormCategory &&
-          c is ShoppingListFormCategory &&
-          p.saveFailureOrSuccessOption != c.saveFailureOrSuccessOption &&
-          c.saveFailureOrSuccessOption.isSome(),
-      listener: (context, state) {
-        final saveOrFailure = (state as ShoppingListFormCategory)
-            .saveFailureOrSuccessOption
-            .fold(() => null, (a) => a);
-
-        final message = saveOrFailure!.isLeft()
-            ? 'Error saving category'
-            : 'Category saved successfully';
-
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(message),
-          duration: const Duration(seconds: 2),
-        ));
+      listenWhen: (p, c) {
+        final isCategoryForm =
+            p is ShoppingListFormCategory && c is ShoppingListFormCategory;
+        final hasFinishedSaving = isCategoryForm
+            ? p.saveFailureOrSuccessOption != c.saveFailureOrSuccessOption &&
+                c.saveFailureOrSuccessOption.isSome()
+            : false;
+        return isCategoryForm && hasFinishedSaving;
       },
+      listener: (context, state) => onFinishedSavingCategory(context, state),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: const [
@@ -46,6 +38,31 @@ class CategoryForm extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void onFinishedSavingCategory(
+    BuildContext context,
+    ShoppingListFormState state,
+  ) {
+    final saveOrFailure = (state as ShoppingListFormCategory)
+        .saveFailureOrSuccessOption
+        .fold(() => null, (a) => a);
+
+    final message = saveOrFailure!.isLeft()
+        ? 'Error saving category'
+        : 'Category saved successfully';
+
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(message),
+      duration: const Duration(seconds: 2),
+    ));
+
+    if (saveOrFailure.isRight()) {
+      final category = saveOrFailure.fold((l) => null, (r) => r)!;
+      context
+          .read<ShoppingListWatcherCubit>()
+          .addOrUpdateLocalCategory(category);
+    }
   }
 }
 

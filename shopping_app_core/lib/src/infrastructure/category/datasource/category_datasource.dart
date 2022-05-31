@@ -26,13 +26,13 @@ class CategoryDatasource implements ICategoryDatasource {
   }
 
   @override
-  Stream<List<Category>> getAllCategories() {
-    final result = firestore.collection(categoriesCollection).snapshots();
-    return result.map((event) => event.docs
+  Future<List<Category>> getAllCategories() async {
+    final result = await firestore.collection(categoriesCollection).get();
+    return result.docs
         .map((e) => CategoryDto.fromMap({
               'id': e.id,
               ...e.data(),
             }).toDomain())
-        .toList());
+        .toList();
   }
 }

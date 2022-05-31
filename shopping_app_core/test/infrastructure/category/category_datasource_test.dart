@@ -21,16 +21,10 @@ void main() {
   group('Category datasource', () {
     test('should get all categories', () async {
       final savedCategory = await categoryDatasource.addCategory(category);
-      final categoriesStream = categoryDatasource.getAllCategories();
+      final categories = await categoryDatasource.getAllCategories();
 
-      expect((await categoriesStream.first).length, 1);
-      expect(categoriesStream, emits(isA<List<Category>>()));
-      expect(
-        categoriesStream,
-        emitsInOrder([
-          [savedCategory]
-        ]),
-      );
+      expect(categories.length, 1);
+      expect(categories.first, equals(savedCategory));
     });
 
     test('should add the category and return the value saved with it\'s id',
@@ -42,9 +36,11 @@ void main() {
 
     test('should delete a saved category', () async {
       final savedCategory = await categoryDatasource.addCategory(category);
-      final categoriesStream = categoryDatasource.getAllCategories();
+      final categories = await categoryDatasource.getAllCategories();
+      expect(categories.length, 1);
       await categoryDatasource.deleteCategory(savedCategory.id!);
-      expect(categoriesStream, emits([]));
+      final newCategories = await categoryDatasource.getAllCategories();
+      expect(newCategories.length, 0);
     });
   });
 }

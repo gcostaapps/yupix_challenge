@@ -2,8 +2,7 @@ import 'dart:io';
 
 import 'package:dependencies_core/dependencies_core.dart';
 import 'package:file_picker/file_picker.dart';
-
-import '../../../shopping_app_core.dart';
+import 'package:shopping_app_core/shopping_app_core.dart';
 
 abstract class IImagePickerService {
   Future<Either<GeneralFailure, File?>> pickImage();

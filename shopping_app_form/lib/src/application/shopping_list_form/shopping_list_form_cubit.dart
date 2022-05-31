@@ -6,6 +6,8 @@ import 'package:shopping_app_core/shopping_app_core.dart';
 
 import 'package:design_system/design_system.dart';
 
+import '../../infrastructure/services/image_picker_service.dart';
+
 part 'shopping_list_form_state.dart';
 
 class ShoppingListFormCubit extends Cubit<ShoppingListFormState> {
@@ -21,16 +23,21 @@ class ShoppingListFormCubit extends Cubit<ShoppingListFormState> {
   final ICategoryRepository categoryRepository;
   final IShoppingItemRepository shoppingItemRepository;
 
+  //Category Form
   void changeToCategoryForm() =>
       emit(ShoppingListFormCategory.initial(AppBaseColors.blue));
 
   void changeCategoryColor(Color color) =>
-      emit((state as ShoppingListFormCategory).copyWith(color: color));
+      emit((state as ShoppingListFormCategory).copyWith(
+        color: color,
+        saveFailureOrSuccessOption: none(),
+      ));
 
   void changeCategoryName(String name) =>
       emit((state as ShoppingListFormCategory).copyWith(
         name: name,
         isValidForm: name.trim().isNotEmpty,
+        saveFailureOrSuccessOption: none(),
       ));
 
   Future<void> saveCategory() async {
@@ -53,24 +60,35 @@ class ShoppingListFormCubit extends Cubit<ShoppingListFormState> {
 
       emit(ShoppingListFormCategory.initial(AppBaseColors.blue).copyWith(
         saveFailureOrSuccessOption: some(Right(result as Category)),
+        isValidForm: false,
       ));
     }
   }
 
+  //Item Form
   void changeToItemForm() => emit(ShoppingListFormItem.initial());
 
   void changeItemName(String name) {
-    emit((state as ShoppingListFormItem).copyWith(name: name));
+    emit((state as ShoppingListFormItem).copyWith(
+      name: name,
+      saveFailureOrSuccessOption: none(),
+    ));
     checkItemFormValid();
   }
 
   void changeItemCategory(Category category) {
-    emit((state as ShoppingListFormItem).copyWith(category: category));
+    emit((state as ShoppingListFormItem).copyWith(
+      category: category,
+      saveFailureOrSuccessOption: none(),
+    ));
     checkItemFormValid();
   }
 
   Future<void> getItemImage() async {
-    emit((state as ShoppingListFormItem).copyWith(filePickFailure: none()));
+    emit((state as ShoppingListFormItem).copyWith(
+      filePickFailure: none(),
+      saveFailureOrSuccessOption: none(),
+    ));
     final resultOrFailure = await imagePickerService.pickImage();
     final result = resultOrFailure.fold((l) => l, (r) => r);
 

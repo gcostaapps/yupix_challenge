@@ -29,6 +29,28 @@ class FavoritesPage extends StatelessWidget {
   }
 }
 
+class _FavoritesLoading extends StatelessWidget {
+  const _FavoritesLoading({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: CircularProgressIndicator(),
+    );
+  }
+}
+
+class _FavoritesFailed extends StatelessWidget {
+  const _FavoritesFailed({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Text('Error, check your internet connection'),
+    );
+  }
+}
+
 class _FavoritesView extends StatefulWidget {
   const _FavoritesView({
     Key? key,
@@ -51,7 +73,7 @@ class __FavoritesViewState extends State<_FavoritesView> {
   @override
   void initState() {
     super.initState();
-    expandedCategories = List.generate(widget.categories.length, (_) => false);
+    expandedCategories = List.generate(widget.categories.length, (_) => true);
   }
 
   @override
@@ -65,26 +87,19 @@ class __FavoritesViewState extends State<_FavoritesView> {
         .toList();
 
     return BlocListener<ShoppingListActorCubit, ShoppingListActorState>(
-      listenWhen: (p, c) =>
-          p.favoriteFailureOrSuccessOption !=
-              c.favoriteFailureOrSuccessOption &&
-          c.favoriteFailureOrSuccessOption.isSome(),
-      listener: (context, state) {
-        final favoriteOrFailure =
-            state.favoriteFailureOrSuccessOption.fold(() => null, (a) => a)!;
-        if (favoriteOrFailure.isRight()) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            content: Text('Item removed from favorites'),
-            duration: Duration(seconds: 2),
-          ));
-        }
+      listenWhen: (p, c) {
+        final hasFinishedFavoriting = p.favoriteFailureOrSuccessOption !=
+                c.favoriteFailureOrSuccessOption &&
+            c.favoriteFailureOrSuccessOption.isSome();
+        return hasFinishedFavoriting;
       },
+      listener: (context, state) => showRemovedFavoriteMessage(context, state),
       child: favoriteCategories.isEmpty
           ? const EmptyFavoriteList()
           : CustomScrollView(
               slivers: [
                 SliverPadding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.fromLTRB(16, 24, 16, 16),
                   sliver: SliverList(
                     delegate: SliverChildBuilderDelegate(
                       childCount: favoriteCategories.length,
@@ -108,26 +123,21 @@ class __FavoritesViewState extends State<_FavoritesView> {
             ),
     );
   }
-}
 
-class _FavoritesLoading extends StatelessWidget {
-  const _FavoritesLoading({Key? key}) : super(key: key);
+  void showRemovedFavoriteMessage(
+    BuildContext context,
+    ShoppingListActorState state,
+  ) {
+    final favoriteOrFailure =
+        state.favoriteFailureOrSuccessOption.fold(() => null, (a) => a)!;
 
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: CircularProgressIndicator(),
-    );
-  }
-}
+    final message = favoriteOrFailure.isRight()
+        ? 'Item Removed from favorites'
+        : 'Failed to remove item from favorites';
 
-class _FavoritesFailed extends StatelessWidget {
-  const _FavoritesFailed({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Error, check your internet connection'),
-    );
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(message),
+      duration: const Duration(seconds: 2),
+    ));
   }
 }

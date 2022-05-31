@@ -1,7 +1,7 @@
 import '../../../domain/shopping_item/shopping_item.dart';
 
 abstract class IShoppingItemDatasource {
-  Stream<List<ShoppingItem>> getAllShopingItems();
+  Future<List<ShoppingItem>> getAllShopingItems();
   Future<ShoppingItem> addShoppingItem(ShoppingItem shoppingItem);
   Future<void> updateShoppingItem(ShoppingItem shoppingItem);
   Future<void> deleteShoppingItem(String shoppingItemId);

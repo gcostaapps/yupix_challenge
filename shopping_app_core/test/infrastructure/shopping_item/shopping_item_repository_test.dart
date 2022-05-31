@@ -150,18 +150,18 @@ void main() {
 
     group('getAllShopingItems', () {
       test(
-          'should return Right(Stream<ShoppingItem>) when list of shoppingItem is retrieved sucessfully',
+          'should return Right(List<ShoppingItem>) when list of shoppingItem is retrieved sucessfully',
           () async {
         when(() => mockShoppingItemDatasource.getAllShopingItems())
-            .thenAnswer((_) => Stream.value([shoppingItemSaved]));
+            .thenAnswer((_) => Future.value([shoppingItemSaved]));
 
-        final result = shoppingItemRepository.getAllShopingItems();
+        final result = await shoppingItemRepository.getAllShopingItems();
         final resultOption = result.fold((l) => l, (r) => r);
 
         verify(() => mockShoppingItemDatasource.getAllShopingItems()).called(1);
         verifyNoMoreInteractions(mockShoppingItemDatasource);
         expect(result.isRight(), true);
-        expect(resultOption, emits(equals([shoppingItemSaved])));
+        expect(resultOption, equals([shoppingItemSaved]));
       });
 
       test(
@@ -170,7 +170,7 @@ void main() {
         when(() => mockShoppingItemDatasource.getAllShopingItems())
             .thenThrow(exception);
 
-        final result = shoppingItemRepository.getAllShopingItems();
+        final result = await shoppingItemRepository.getAllShopingItems();
         final resultOption = result.fold((l) => l, (r) => r);
 
         verify(() => mockShoppingItemDatasource.getAllShopingItems()).called(1);

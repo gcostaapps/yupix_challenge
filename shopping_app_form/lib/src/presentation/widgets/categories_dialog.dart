@@ -11,9 +11,9 @@ class CategoriesDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final watcherState =
+    final categoriesWatcherState =
         context.select((ShoppingListWatcherCubit c) => c.state);
-    final categories = watcherState.maybeMap(
+    final categories = categoriesWatcherState.maybeMap(
       loaded: (state) => state.categories,
       orElse: () => [],
     );
@@ -40,7 +40,13 @@ class CategoriesDialog extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8),
-              if (categories.isEmpty) const Text('There is no category yet'),
+              if (categories.isEmpty)
+                const Padding(
+                  padding: EdgeInsets.only(top: 24),
+                  child: Center(
+                    child: Text('There is no category yet'),
+                  ),
+                ),
               if (categories.isNotEmpty)
                 ...categories
                     .map((category) => _CategoryDialogItem(category: category))

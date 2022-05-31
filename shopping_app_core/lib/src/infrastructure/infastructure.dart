@@ -5,4 +5,3 @@ export 'shopping_item/repository/shopping_item_repository.dart';
 export 'shopping_item/datasource/shopping_item_datasource.dart';
 export 'shopping_item/repository/i_shopping_item_datasource.dart';
 export 'services/storage_service.dart';
-export 'services/image_picker_service.dart';

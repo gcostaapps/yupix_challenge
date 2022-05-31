@@ -4,6 +4,12 @@
 Project developed for Yupix Challenge.
 
 
+## Notes
+
+The project has all features in the requirements and has unit testing in all datasources and repositories. Some cubits are also tested (not all of them for the sake of time). It has also a custom design system and works with native light/dark mode. 
+
+As I wanted to create a app with a custom design system, because of that and the short time that I had in the weekend the code published before the deadline (available on the before-deadline branch) was not ideal and was missing some features. So I kept making some changes after the deadline resulting in this branch. If you want to see the code submited before the deadline see the before-deadline branch.
+
 
 
 ## Project Structure
@@ -50,7 +56,17 @@ For a limited time project some production standarts were skipped, resulting in 
 
 ## Videos
 
-<img src="lightmode.gif" width="288" height="640"/>
-<img src="darkmode.gif" width="288" height="640"/>
+<table>
+  <tr>
+     <td>Light Mode</td>
+     <td>Dark Mode</td>
+  </tr>
+  <tr>
+    <td><img src="lightmode.gif" width="288" height="640"/></td>
+    <td><img src="darkmode.gif" width="288" height="640"/></td>
+  </tr>
+ </table>
+
+
 
 

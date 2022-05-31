@@ -34,15 +34,14 @@ void main() {
       blocTest<ShoppingListWatcherCubit, ShoppingListWatcherState>(
         'should emit [WatcherLoading, WatcherLoaded] when items were retrieved successfully',
         build: () => watcherCubit,
-        act: (cubit) {
+        setUp: () {
           when(() => mockCategoryRepository.getAllCategories())
-              .thenAnswer((_) => Right(Stream.value([])));
+              .thenAnswer((_) => Future.value(const Right([])));
 
           when(() => mockShoppingItemRepository.getAllShopingItems())
-              .thenAnswer((_) => Right(Stream.value([])));
-
-          cubit.loadItemsAndCategories();
+              .thenAnswer((_) => Future.value(const Right([])));
         },
+        act: (cubit) => cubit.loadItemsAndCategories(),
         expect: () => [
           isA<WatcherLoading>(),
           isA<WatcherLoaded>(),
@@ -60,15 +59,14 @@ void main() {
     blocTest<ShoppingListWatcherCubit, ShoppingListWatcherState>(
       'should emit [WatcherLoading, WatcherFailed] when category repository throws failure',
       build: () => watcherCubit,
-      act: (cubit) {
-        when(() => mockCategoryRepository.getAllCategories())
-            .thenAnswer((_) => Left(GeneralFailure(ErrorData(''))));
+      setUp: () {
+        when(() => mockCategoryRepository.getAllCategories()).thenAnswer(
+            (_) => Future.value(Left(GeneralFailure(ErrorData('')))));
 
         when(() => mockShoppingItemRepository.getAllShopingItems())
-            .thenAnswer((_) => Right(Stream.value([])));
-
-        cubit.loadItemsAndCategories();
+            .thenAnswer((_) => Future.value(const Right([])));
       },
+      act: (cubit) => cubit.loadItemsAndCategories(),
       expect: () => [
         isA<WatcherLoading>(),
         isA<WatcherFailed>(),
@@ -84,15 +82,14 @@ void main() {
     blocTest<ShoppingListWatcherCubit, ShoppingListWatcherState>(
       'should emit [WatcherLoading, WatcherFailed] when shopping items repository throws failure',
       build: () => watcherCubit,
-      act: (cubit) {
+      setUp: () {
         when(() => mockCategoryRepository.getAllCategories())
-            .thenAnswer((_) => Right(Stream.value([])));
+            .thenAnswer((_) => Future.value(const Right([])));
 
-        when(() => mockShoppingItemRepository.getAllShopingItems())
-            .thenAnswer((_) => Left(GeneralFailure(ErrorData(''))));
-
-        cubit.loadItemsAndCategories();
+        when(() => mockShoppingItemRepository.getAllShopingItems()).thenAnswer(
+            (_) => Future.value(Left(GeneralFailure(ErrorData('')))));
       },
+      act: (cubit) => cubit.loadItemsAndCategories(),
       expect: () => [
         isA<WatcherLoading>(),
         isA<WatcherFailed>(),
