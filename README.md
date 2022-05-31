@@ -34,14 +34,6 @@ A module can have up to 5 folders:
 * **utils**: Auxiliary classes.
 
 
-## Troubles in the development
-
-Altough the user interface wasn't the main focus of this challenge, I wanted to create a custom UI with animations without using many packages. Besides that, I've decided to use streams instead of Future to have realtime updates in the app but this made harder to do some animations and updates in the app. These things in addition to the short available time that I had caused some issues. 
-
-The main issue was not developing the search feature, altough it was simple. Besides that, some cubits and services were not tested with unit testing.
-
-Despite that, all repositories, datasources, and some cubits are covered with unit tests.
-
 ## Improvements that can be made
 
 For a limited time project some production standarts were skipped, resulting in some future improvements that can be made:
@@ -56,12 +48,16 @@ For a limited time project some production standarts were skipped, resulting in 
 
 ## Videos
 
+PS: Lowered quality and FPS becaus of gif format.
+
 <table>
   <tr>
-     <td>Light Mode</td>
-     <td>Dark Mode</td>
+    <td>All features</td>
+    <td>Light Mode</td>
+    <td>Dark Mode</td>
   </tr>
   <tr>
+    <td><img src="full.gif" width="288" height="640"/></td>
     <td><img src="lightmode.gif" width="288" height="640"/></td>
     <td><img src="darkmode.gif" width="288" height="640"/></td>
   </tr>
